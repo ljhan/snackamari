@@ -3,6 +3,7 @@
 #include "RolliboiPawn.h"
 #include "Classes/Components/StaticMeshComponent.h"
 #include "Classes/Components/SceneComponent.h"
+#include "snackamari/Actors/RolliPawnMovementComponent.h"
 
 // Sets default values
 ARolliboiPawn::ARolliboiPawn()
@@ -14,6 +15,9 @@ ARolliboiPawn::ARolliboiPawn()
 	camAnchor = CreateDefaultSubobject<USceneComponent>(TEXT("camAnchor"));
 	camAnchor->SetupAttachment(RootComponent);
 	camAnchor->bAbsoluteRotation = true;
+	movementComponent = CreateDefaultSubobject<URolliPawnMovementComponent>(TEXT("movementComponent"));
+	movementComponent->UpdatedPrimitive = mesh;
+	
 
 }
 
@@ -27,7 +31,6 @@ void ARolliboiPawn::BeginPlay()
 void ARolliboiPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
 
 }
 
@@ -38,3 +41,11 @@ void ARolliboiPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 }
 
+UPawnMovementComponent * ARolliboiPawn::GetMovementComponent() const
+{
+	return movementComponent;
+}
+
+void ARolliboiPawn::AddMovementInput(FVector WorldDirection, float ScaleValue, bool bForce) {
+	movementComponent->AddInputVector(WorldDirection*ScaleValue, bForce);
+}

@@ -25,6 +25,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "rolliboi")
 	class USceneComponent* camAnchor;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "rolliboi")
+	class URolliPawnMovementComponent* movementComponent;
+
 
 public:	
 	// Called every frame
@@ -33,4 +36,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual UPawnMovementComponent * GetMovementComponent() const override;
+	virtual void AddMovementInput(FVector WorldDirection, float ScaleValue, bool bForce) override;
 };
